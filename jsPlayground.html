@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JS Playground</title>
+	<meta charset="utf-8">	
+	<link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<style type="text/css">
+		body {
+			background: url('http://wallpaperstyle.com/web/wallpapers/sexy-girl-on-beach/2880x1800.jpg') no-repeat center center fixed;
+			background-size: cover;
+			color: #50b200;
+			font-family: VT323, arial;
+			font-weight: bold;
+			font-size: 26px;
+		}
+		input {
+			background: #000;
+			color: #50b200;
+			font-family: VT323, arial;
+			font-weight: bold;
+			font-size: 26px;
+			margin: 0;
+			padding: 0;
+			border: 0 solid black;
+		}
+		#cmdWindow {
+			background: #000;
+			word-wrap: break-word;			
+			border: 5px solid #353535;
+			border-top-width: 0px;
+		}
+		.titleBar {
+			height: 32px;
+			width: 100%;
+			background: #353535;
+			word-wrap: break-word;
+		}
+		.exitButton {
+			background: #D00;
+			width: 40px !important;
+			font-size: 20px;
+			padding: 0px 0px;
+			float: right;
+			border-left: 1px solid #111;
+			border-bottom-right-radius: 2px;
+		}
+		.exitButton:hover {
+			background: #F00;
+		}
+		.minButton {
+			background: #444;
+			width: 30px !important;
+			font-size: 20px;
+			padding: 0px 0px;
+			float: right;
+			border-bottom-left-radius: 3px;
+		}
+		.minButton:hover {
+			background: #777;
+		}
+		.exitText {
+			text-align: center;
+			padding: 0;
+			margin: 0 auto;
+			font-size: 20px;
+			color: #EEE;
+			text-shadow: 0px 1px 1px #000, 0px -1px 2px #000;
+		}
+		.titleBarButtons {
+			float: right;
+		}
+		.titleBarTitle {
+			float: left;
+		}
+		.titleText {
+			color: #AAA;
+			padding-left: 10px;
+		}
+		.inputArea {
+			padding: 0px 4px;
+			min-height: 350px;
+		}
+		.terminalIcon {
+			margin: 5px;
+			text-align: center;
+			background: rgba(0, 0, 0, 0.01);
+			border-radius: 5%;
+			display: inline-block;
+			/*add like padding and when cover change background and border add*/
+		}
+		.terminalIcon:hover {
+			background: rgba(0, 0, 0, 0.2);
+			border-radius: 5%;
+			box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.1);
+		}
+		.terminalIcon:active {
+			background: rgba(0, 0, 0, 0.1);
+			box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.3);
+			border-radius: 5%;
+		}
+		.terminalIcon p {
+			word-wrap: break-word;
+			font-size: 14px !important;
+		}
+		.terminalIcon img {
+			display: block;
+			margin: 0 auto;
+		}
+		.icon {
+			width: 64px;
+		}
+		.padIcon {
+			padding: 8px;
+		}
+	</style>
+</head>
+<body onLoad="">
+<div id="terminalIcon" class="terminalIcon">
+	<div class="padIcon">
+		<img class="icon" src="https://cdn.tutsplus.com/mac/authors/legacy/John%20Pavlovits/2012/09/02/Terminal%20Tutorial%20Icon.png" />
+		<p class="exitText">Start JS Playground</p>
+	</div>
+</div>
+<script type="text/javascript" language="javascript">
+	$('#terminalIcon').hide();
+</script>
+
+<div id="cmdWindow">
+	<div class="row" style="padding: 0; margin: 0;">
+		<div class="col-md-12 col-lg-12 hidden-sm hidden-xs titleBar">
+			<div class="titleBarTitle"><p class="exitText titleText">JS Playground command prompt - knox97</p></div>
+			<div class="titleBarButtons">
+				<div id="closeTab" class="exitButton"><p class="exitText">X</p></div>
+				<div id="minTab" class="minButton"><p class="exitText">-</p></div>	
+			</div>
+		</div>
+	</div>
+	<div class="inputArea">
+		<p id="title"></p>
+		<p id="message">> Press ENTER to start the game</p>
+	</div>
+</div>
+<script type="text/javascript" language="javascript">
+	<!--// remove JS from older browsers that don-t support JS
+	// getting inputs
+	onPageLoaded();
+	function startGame() {
+		var userInput = prompt("Type in any number you would like between 0 and 100");
+		var computerInput = parseInt(Math.random() * 100);
+		var winningInput = parseInt(Math.random() * 100);
+		// what to do if number is between 0 100 and what to do if its not
+		if (userInput >= 0 && userInput <= 100 && userInput != '') {
+			setWinner(userInput, computerInput, winningInput);
+		}
+		else {
+			document.getElementById('message').innerHTML = "> Press ENTER to try again and READ the instructions";
+		}
+	}
+	// checking who has won the game
+	function setWinner(user, computer, win) {
+		// checking how close each input was to the winning input
+		var userDistance = Math.abs(user - win);
+		var computerDistance = Math.abs(computer - win);
+		if (userDistance === computerDistance) {
+			return document.getElementById('message').innerHTML = "> :::::::::::::::::::::::::::::::: It's tie :::::::::::::::::::::::::::::::" + "<br>> Jackpot: " + win + "<br>> -- Computer: " + computer + "<br>> -- You: " + user + "<br><br>> Press ENTER to try again";
+		}
+		else if (userDistance >= computerDistance) {
+			return document.getElementById('message').innerHTML = "> ::::::::::::::::::::::::::: Computer has won! :::::::::::::::::::::::::::" + "<br>> Jackpot: " + win + "<br>> -- Computer: " + computer + "<br>> -- You: " + user + "<br><br>> Press ENTER to try again";
+		}
+		else {
+			return document.getElementById('message').innerHTML = "> ::::::::::::::::::::::::::::: You have won! :::::::::::::::::::::::::::::" + "<br>> Jackpot: " + win + "<br>> -- Computer: " + computer + "<br>> -- You: " + user + "<br><br>> Press ENTER to try again";
+		}
+	}
+	// when page is loaded
+	function onPageLoaded() {
+		document.getElementById('title').innerHTML = "> Hello World!<br>> This is JavaScript Playground have fun and keep coding!<br>> Lets play 'Jackpot' game, who has closer number to jackpot wins";
+	}
+	// when press ENTER startGame()
+	$(document).keypress(function(e) {
+	    if(e.which == 13) {
+	        startGame();
+	    }
+	});
+
+	$(document).ready(function () {
+		// when clicked '-' minimize window to some smaller width
+		$('#minTab').click(function() {
+			$('#cmdWindow').css(
+				'width', '535px'
+				);
+			$('#cmdWindow').css(
+				'margin-left', '69px'
+				);
+			$('#cmdWindow').css(
+				'margin-top', '100px'
+				);
+			$('#terminalIcon').show();
+		});
+		// when clicked on the 'X' hide the window
+		$('#closeTab').click(function() {
+			$('#cmdWindow').hide();
+			$('#terminalIcon').show();
+			$('#cmdWindow').css(
+				'margin', '0'
+				);
+			$('#cmdWindow').css(
+				'width', 'auto'
+				);
+		});
+		$('#terminalIcon').click(function() {
+			$(this).hide();
+			$('#cmdWindow').show();
+			$('#cmdWindow').css(
+				'margin', '0'
+				);
+			$('#cmdWindow').css(
+				'width', 'auto'
+				);
+		});
+		
+	});
+	
+
+
+
+	//-->
+</script>
+<noscript>
+	<h1>Your browser does not support JavaScript</h1>
+</noscript>
+</body>
+</html>
